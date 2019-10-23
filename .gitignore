@@ -1,0 +1,10 @@
+#
+#  GIT IGNORE
+#
+#
+#
+
+*.bin
+*.log
+*.tmp
+**/bin/
