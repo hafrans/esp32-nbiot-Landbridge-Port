@@ -44,8 +44,12 @@ extern "C" {
 #define CONST_PINS_COLOR_RED_PIN 25 //ESP32
 #define CONST_PINS_COLOR_GREEN_PIN 26 //ESP32
 #define CONST_PINS_COLOR_BLUE_PIN 27 //ESP32
-//#define CONST_PINS_BEEP_PIN 27 //ESP32 temp solution
-#define CONST_PINS_BEEP_PIN 32 //ESP32 solution
+// 新旧板子定义 temp为旧板子
+#ifdef NEW
+  #define CONST_PINS_BEEP_PIN 27 //ESP32 temp solution
+#else
+  #define CONST_PINS_BEEP_PIN 32 //ESP32 solution
+#endif
 
 #define CONST_PINS_COLOR_BLINK_DELAY 100
 #define CONST_PINS_COLOR_50MS_DELAY 50
