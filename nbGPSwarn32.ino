@@ -1,7 +1,18 @@
+/**
+ * 
+ * 
+ * 
+ */
+
 /*
    modified on 2019/10/10
    this is a new version, which imporve the loop logic and structure.
 */
+/**
+ * 新板子要加这个定义
+ */
+#define NEW 
+
 #include <arduino.h>
 #include <WiFi.h>
 #include <WiFiMulti.h>
@@ -29,7 +40,7 @@ extern "C" {
 //DON'T CHANGE THE MAIN PART CODE
 
 #define FORMAT_SPIFFS_IF_FAILED true
-#define CONST_APP_GPSWARN_VERSION 1900000
+#define CONST_APP_GPSWARN_VERSION 191023002
 
 extern LVTime gTime;
 
@@ -99,7 +110,12 @@ void setup()
   check_sys_data();
   DBGPRINTLN("+--------------------------------------------+");
   DBGPRINTLN("+HELLO, THIS FIRMWARE WAS COMPILED BY HAFRANS+");
-  DBGPRINTLN("+           Date: 10/22/2019 Build 2         +");
+  #ifdef NEW
+  DBGPRINTLN("+       PIN DEFINITION : NEW                 +");
+  #else
+  DBGPRINTLN("+       PIN DEFINITION : OLD                 +");
+  #endif
+  DBGPRINTLN("+           Date: 10/23/2019 Build 2         +");
   DBGPRINTLN("+--------------------------------------------+");
   vApplication_setup_call_after_main();
 }
