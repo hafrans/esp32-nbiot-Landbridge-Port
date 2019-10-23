@@ -1,0 +1,25 @@
+#######################################
+# Syntax Coloring Map For ListArray
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ListArray	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+push	KEYWORD2
+pop	KEYWORD2
+lpush	KEYWORD2
+lpop	KEYWORD2
+rpush	KEYWORD2
+rpop	KEYWORD2
+index	KEYWORD2
+isEmpty	KEYWORD2
+isFull	KEYWORD2
+count	KEYWORD2
+len	KEYWORD2

@@ -1,0 +1,16 @@
+#######################################
+# Syntax Coloring Map For miscCommon
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+miscCommon	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+vReset_interval	KEYWORD2
+ulGet_interval	KEYWORD2
