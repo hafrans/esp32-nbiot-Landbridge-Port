@@ -47,8 +47,8 @@ extern "C" {
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
-#define CONST_APP_GPSWARN_VERSION 191023002
-const char *VERSIONSTR = "Date: 10/23/2019 Build X";
+#define CONST_APP_GPSWARN_VERSION 19102401
+const char *VERSIONSTR = "Date: 10/24/2019 Build 4";
 
 extern LVTime gTime;
 
@@ -128,7 +128,7 @@ void setup()
   DBGPRINTF ("+   CONST_AT_BC26_ECHO_TIME_OUT    +   %5d +\n",CONST_AT_BC26_ECHO_TIME_OUT);
   DBGPRINTF ("+   CONST_AT_DATA_LIST_COUNT       +   %5d +\n",CONST_AT_DATA_LIST_COUNT);
   DBGPRINTF ("+   CONST_BIG_BUFF_LEN             +   %5d +\n",1400);
-  DBGPRINTF ("+   CONST_APP_DEVICE_SLOW_INTERVAL +   %5d +\n",7);
+  DBGPRINTF ("+   CONST_APP_DEVICE_SLOW_INTERVAL +   %5d +\n",10);
   DBGPRINTF ("+   CONST_APP_DEVICE_DEFU_INTERVAL +   %5d +\n",10);
   DBGPRINTLN("+--------------------------------------------+");
   vApplication_setup_call_after_main();
@@ -346,7 +346,7 @@ NBIOT gsNB; //NBIOT 驱动
 #define CONST_APP_DEVICE_INFO_SELF_WARNING_MSG "SelfWarning"
 
 #define CONST_APP_DEVICE_MAX_INTERVAL 600 //最大的通信间隔
-#define CONST_APP_DEVICE_SLOW_INTERVAL 7 //无风险时候的通信间隔
+#define CONST_APP_DEVICE_SLOW_INTERVAL  10 //无风险时候的通信间隔
 #define CONST_APP_DEVICE_DEFAULT_INTERVAL 10 //正常的通信间隔
 
 #define CONST_APP_GPS_DEFAULT_IGNORE_TIMES 3
@@ -653,9 +653,10 @@ void enable_interrupts()
 //读取当前GPS数据, 并负责发送数据
 void read_GPS_send_data()
 {
-
-  //read GPS Data
-  if ((ulGet_interval(gpsWarn.ulNBConnTicks) > (gpsWarn.ulNBConnInterval * 1000)))
+  //loop1
+ 
+  //read GPS Data ## DEBUG
+  if (1 || (ulGet_interval(gpsWarn.ulNBConnTicks) > (gpsWarn.ulNBConnInterval * 1000)))
   {
     DBGPRINTF("\n-> read_GPS_send_data %d, %d", gpsWarn.ulNBConnTicks, gpsWarn.ulNBConnInterval);
     gpsWarn.ulNBConnTicks = ulReset_interval();
@@ -1104,7 +1105,9 @@ void vApplication_main_loop_call()
   }
 
   //GPS 自循环
-  gsUblox.loop();
+  for(int i = 0 ; i < 10; i ++){
+     gsUblox.loop();
+  }
 
   delay(1);
 }

@@ -15,7 +15,6 @@
 
 #define RECEIVE_BUFFER_COUNT 16
 static ListArray recvList(RECEIVE_BUFFER_COUNT, CONST_APP_GPS_UBLOX_SIO_MAX_LENGTH + 2);
-static uint8_t echoCounter = 0;
 ublox::ublox()
 {
 }
@@ -62,7 +61,7 @@ void ublox::handle_device_data()
 {
   uint16_t cmd;
   char buff[1000];
-  //DBGPRINT("\n-> handle_device_data ");
+  DBGPRINT("\n-> handle_device_data ");
   recvList.rpop(recvData);
   nmea_type = getNmeaType((char *) recvData);
   switch (nmea_type)
@@ -79,19 +78,18 @@ void ublox::handle_device_data()
       break;
   }
   
-  if (echoCounter % 5 == 0)
-  DBGPRINTF("\n-> current GPS latitude:[%d][%d], longitude:[%d][%d], speed:[%d][%d]",
+  DBGPRINTF("\n-> !!! current GPS latitude:[%d][%d], longitude:[%d][%d], speed:[%d][%d]",
            latitude.value, latitude.scale,
 		   longitude.value, longitude.scale,
 		   speed.value, speed.scale);
-  echoCounter ++;
 }
 
 
 
 void ublox::loop()
 {
-  available();
+  while( available() <= 0);
+  DBGPRINT("\n-> ublox available ");
   //if (recvList.len() && ulGet_interval(ulRecvTimeOutTick) > CONST_UBLOX_SIO_BUSY_TIME_IN_MS)
   if (recvList.len() > 0)
   {
