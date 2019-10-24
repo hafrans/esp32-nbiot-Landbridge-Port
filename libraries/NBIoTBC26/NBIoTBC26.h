@@ -38,7 +38,7 @@ extern "C" {
 #define CONST_AT_SIO_BAUD_DATA 9600 //软串口速度
 #define CONST_AT_SIO_BUSY_TIME_IN_MS 10
 
-#define CONST_AT_BC26_ECHO_TIME_OUT 1000
+#define CONST_AT_BC26_ECHO_TIME_OUT 2500
 
 // header defining the interface of the source.
 #define APP_SERIAL Serial2 //for ESP32 IO16 = RXD2 IO17 = TXD2

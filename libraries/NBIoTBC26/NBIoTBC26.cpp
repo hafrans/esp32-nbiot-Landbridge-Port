@@ -2070,7 +2070,7 @@ short NBIOT::send_data_tcpudp(short socketType, short nLen, uint8_t *data)
         DBGPRINTF("\n-> QSOSEND:[%d], %s", tryTimes,recvStru.cmdString);
         dataLen = decode_QSOSEND(recvStru.cmdString);
         DBGPRINTF("\n-> dataLen[%d]",dataLen);
-        if (dataLen >=0)
+        if (dataLen >=0 || socketNo == -1)
 		{
           break;
 		}
@@ -2390,7 +2390,8 @@ short NBIOT::read_with_wait(short microSeconds,short LFCount)
     external_loop_process();
   }
   if(nRecvLen > 0)
-  {      
+  {  
+	
     //if ((chR == CONST_LF) && (nRecvLen > 2) && (theCount>= (LFCount*2) )) {
     DBGPRINTF("\n-> prepare to copy data:[%d] nRevnLen[%d]",theCount,nRecvLen);
     modemExist = true;
@@ -2399,6 +2400,10 @@ short NBIOT::read_with_wait(short microSeconds,short LFCount)
     memcpy(recvStru.cmdString,au8recvBuff,nRecvLen);
     recvStru.cmd = lastCMD;
     DBGPRINTF("\n-> cmd:[%d]",recvStru.cmd);
+	if (strstr(recvStru.cmdString,"socket") != NULL){
+		DBGPRINT("\n-> *********catched a socket problem*************");
+		socketNo = -1;
+	}
   }
   DBGPRINT("\n-> ======read_with_wait end");
 }

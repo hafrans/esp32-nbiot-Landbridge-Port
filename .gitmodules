@@ -1,0 +1,4 @@
+[submodule "arduino-esp32"]
+	path = arduino-esp32
+	url = https://repo.ac.cn/hafrans/arduino-esp32
+	branch = master

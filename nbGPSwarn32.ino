@@ -1,7 +1,13 @@
 /**
  * 
+ * NB GPS WARNING
+ * 
+ * Modified by Chuuka Ro () on Oct 23 2019
  * 
  * 
+ * 
+ * Copyright (C) 2019  Steven Lian (steven.lian@gmail.com)
+ * modified on 2019/05/19  
  */
 
 /*
@@ -40,7 +46,9 @@ extern "C" {
 //DON'T CHANGE THE MAIN PART CODE
 
 #define FORMAT_SPIFFS_IF_FAILED true
+
 #define CONST_APP_GPSWARN_VERSION 191023002
+const char *VERSIONSTR = "Date: 10/23/2019 Build X";
 
 extern LVTime gTime;
 
@@ -115,7 +123,13 @@ void setup()
   #else
   DBGPRINTLN("+       PIN DEFINITION : OLD                 +");
   #endif
-  DBGPRINTLN("+           Date: 10/23/2019 Build 2         +");
+  DBGPRINTF ("+           %s         +\n",VERSIONSTR);
+  DBGPRINTLN("+--------------------------------------------+");
+  DBGPRINTF ("+   CONST_AT_BC26_ECHO_TIME_OUT    +   %5d +\n",CONST_AT_BC26_ECHO_TIME_OUT);
+  DBGPRINTF ("+   CONST_AT_DATA_LIST_COUNT       +   %5d +\n",CONST_AT_DATA_LIST_COUNT);
+  DBGPRINTF ("+   CONST_BIG_BUFF_LEN             +   %5d +\n",1400);
+  DBGPRINTF ("+   CONST_APP_DEVICE_SLOW_INTERVAL +   %5d +\n",7);
+  DBGPRINTF ("+   CONST_APP_DEVICE_DEFU_INTERVAL +   %5d +\n",10);
   DBGPRINTLN("+--------------------------------------------+");
   vApplication_setup_call_after_main();
 }
@@ -176,7 +190,7 @@ unsigned long glAppStatusChangeInterval;
 unsigned long gulApplicationTicks;
 #define CONST_READ_INTERVAL 5*1000
 
-#define CONST_BIG_BUFF_LEN 1000
+#define CONST_BIG_BUFF_LEN 1400
 
 char bigBuff[CONST_BIG_BUFF_LEN];
 
@@ -332,8 +346,8 @@ NBIOT gsNB; //NBIOT 驱动
 #define CONST_APP_DEVICE_INFO_SELF_WARNING_MSG "SelfWarning"
 
 #define CONST_APP_DEVICE_MAX_INTERVAL 600 //最大的通信间隔
-#define CONST_APP_DEVICE_SLOW_INTERVAL 60 //无风险时候的通信间隔
-#define CONST_APP_DEVICE_DEFAULT_INTERVAL 15 //正常的通信间隔
+#define CONST_APP_DEVICE_SLOW_INTERVAL 7 //无风险时候的通信间隔
+#define CONST_APP_DEVICE_DEFAULT_INTERVAL 10 //正常的通信间隔
 
 #define CONST_APP_GPS_DEFAULT_IGNORE_TIMES 3
 
