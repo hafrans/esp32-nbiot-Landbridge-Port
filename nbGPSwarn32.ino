@@ -47,8 +47,8 @@ extern "C" {
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
-#define CONST_APP_GPSWARN_VERSION 19102401
-const char *VERSIONSTR = "Date: 10/24/2019 Build 4";
+#define CONST_APP_GPSWARN_VERSION 19102501
+const char *VERSIONSTR = "Date: 10/25/2019 Build 5";
 
 extern LVTime gTime;
 
@@ -656,7 +656,7 @@ void read_GPS_send_data()
   //loop1
  
   //read GPS Data ## DEBUG
-  if (1 || (ulGet_interval(gpsWarn.ulNBConnTicks) > (gpsWarn.ulNBConnInterval * 1000)))
+  if ((ulGet_interval(gpsWarn.ulNBConnTicks) > (gpsWarn.ulNBConnInterval * 1000)))
   {
     DBGPRINTF("\n-> read_GPS_send_data %d, %d", gpsWarn.ulNBConnTicks, gpsWarn.ulNBConnInterval);
     gpsWarn.ulNBConnTicks = ulReset_interval();
@@ -754,7 +754,7 @@ void read_GPS_send_data()
 void check_system_cmd()
 {
   //to determine if there is a system cmd available
-  if (gsNB.dataCount > 0)
+  while (gsNB.dataCount > 0) //强制接收完数据
   {
     DBGPRINTF("\n-> server response is available %d", gsNB.dataCount);
     gsNB.pop_data((unsigned char *)gsNB.recvData.data);
@@ -963,11 +963,11 @@ void func_CONNECTED_STATE()
   //DBGPRINTF("\n-> func_CONNECTING_STATE %d", gchMainState);
   beepLed.change_PINS_status(CONST_PINS_STATUS_GREEN_ONLY);
 
-  //NB 数据读取自循环
-  gsNB.loop();
-
   //读当前GPS数据并上报
   read_GPS_send_data();
+
+  //NB 数据读取自循环
+  gsNB.loop();
 
   //监测是否有服务器命令
   check_system_cmd();
@@ -979,11 +979,11 @@ void func_WARNING_STATE()
   //DBGPRINTF("\n-> func_WARNING_STATE %d", gchMainState);
   beepLed.change_PINS_status(CONST_PINS_STATUS_RED_BEEP);
 
-  //NB 数据读取自循环
-  gsNB.loop();
-
   //读当前GPS数据并上报
   read_GPS_send_data();
+
+  //NB 数据读取自循环
+  gsNB.loop();
 
   //监测是否有服务器命令
   check_system_cmd();
@@ -995,11 +995,11 @@ void func_FAST_WARNING_STATE()
   //DBGPRINTF("\n-> func_FAST_WARNING_STATE %d", gchMainState);
   beepLed.change_PINS_status(CONST_PINS_STATUS_FAST_RED_BEEP);
 
-  //NB 数据读取自循环
-  gsNB.loop();
-
   //读当前GPS数据并上报
   read_GPS_send_data();
+
+  //NB 数据读取自循环
+  gsNB.loop();
 
   //监测是否有服务器命令
   check_system_cmd();
@@ -1012,11 +1012,11 @@ void func_ERROR_STATE()
   //DBGPRINTF("\n-> func_ERROR_STATE %d", gchMainState);
   beepLed.change_PINS_status(CONST_PINS_STATUS_YELLOW_ONLY);
 
-  //NB 数据读取自循环
-  gsNB.loop();
-
   //读当前GPS数据并上报
   read_GPS_send_data();
+
+  //NB 数据读取自循环
+  gsNB.loop();
 
   //监测是否有服务器命令
   check_system_cmd();
@@ -1105,7 +1105,7 @@ void vApplication_main_loop_call()
   }
 
   //GPS 自循环
-  for(int i = 0 ; i < 10; i ++){
+  for(int i = 0 ; i < 5; i ++){
      gsUblox.loop();
   }
 
