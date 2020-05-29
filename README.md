@@ -3,7 +3,7 @@
 > 第一版的修正版，
 
 ## 环境
-# MCU:ESP32
-# Modem: BC26
-# GPS: 
-# ....
+* MCU:ESP32
+* Modem: BC26
+* GPS: 
+* ....
